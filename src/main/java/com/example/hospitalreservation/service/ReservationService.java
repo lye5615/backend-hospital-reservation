@@ -5,6 +5,7 @@ import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -25,19 +26,20 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
-    public Long createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
+    public Long createReservation(Long doctorId, Long patientId, String reservationTimeStr, String reason) {
         //진료 가능 시간 체크
-        LocalTime time = reservationTime.toLocalTime();
-        if(time.isBefore(LocalTime.of(9, 0))||time.isAfter(LocalTime.of(16, 0))){
+        LocalTime desiredTime = LocalTime.parse(reservationTimeStr);
+        if(desiredTime.isBefore(LocalTime.of(9, 0))||desiredTime.isAfter(LocalTime.of(16, 0))){
             throw new ReservationException("의사의 진료 가능 시간(09:00~17:00) 내에서만 예약할 수 있습니다.");
         }
 
-        Optional<Reservation> existingReservation = reservationRepository.findByDoctorIdAndReservationTime(doctorId, reservationTime);
+        Optional<Reservation> existingReservation = reservationRepository.findByDoctorIdAndReservationTime(doctorId, desiredTime);
         if(existingReservation.isPresent()){
             throw new ReservationException("해당 시간에는 이미 예약이 있습니다. 다른 시간을 선택해주세요.");
         }
 
-        Reservation reservation = Reservation.of(doctorId, patientId, reservationTime);
+
+        Reservation reservation = Reservation.of(doctorId, patientId, desiredTime, reason);
         return reservationRepository.save(reservation).getId();
     }
 

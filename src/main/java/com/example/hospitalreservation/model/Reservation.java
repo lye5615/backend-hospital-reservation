@@ -1,22 +1,25 @@
 package com.example.hospitalreservation.model;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Reservation {
     private Long id;
     private Long doctorId;
     private Long patientId;
-    private LocalDateTime reservationTime;
+    private LocalTime desiredTime;
+    private String reason;
 
     // TODO_w2 : 필요한 메서드가 있다면 작성해주세요.
-    public Reservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
+    public Reservation(Long doctorId, Long patientId, LocalTime desiredTime, String reason) {
         this.doctorId = doctorId;
         this.patientId = patientId;
-        this.reservationTime = reservationTime;
+        this.desiredTime = desiredTime;
+        this.reason = reason;
     } //refactor: setter 대신 생성자
 
-    public static Reservation of(Long doctorId, Long patientId, LocalDateTime reservationTime) {
-        return new Reservation(doctorId, patientId, reservationTime);
+    public static Reservation of(Long doctorId, Long patientId, LocalTime desiredTime, String reason) {
+        return new Reservation(doctorId, patientId, desiredTime, reason);
     }//정적 팩토리 메소드
 
     public long getId() {
@@ -35,7 +38,9 @@ public class Reservation {
         return patientId;
     }
 
-    public LocalDateTime getReservationTime() {
-        return reservationTime;
+    public LocalTime getDesiredTime() {
+        return desiredTime;
     }
+
+    public String getReason() {return reason;}
 }

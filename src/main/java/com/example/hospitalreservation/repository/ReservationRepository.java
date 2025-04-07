@@ -4,6 +4,7 @@ import com.example.hospitalreservation.model.Reservation;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,10 +26,10 @@ public class ReservationRepository {
                 .findFirst();
     }
 
-    public Optional<Reservation> findByDoctorIdAndReservationTime(Long doctorId, LocalDateTime reservationTime) {
+    public Optional<Reservation> findByDoctorIdAndReservationTime(Long doctorId, LocalTime reservationTime) {
         return reservations.stream()
                 .filter(reservation -> reservation.getDoctorId().equals(doctorId) &&
-                        reservation.getReservationTime().equals(reservationTime))
+                        reservation.getDesiredTime().equals(reservationTime))
                 .findFirst();
     }
 
