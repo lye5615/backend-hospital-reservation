@@ -1,6 +1,6 @@
 package com.example.hospitalreservation.fee;
 
-public interface FeeCaculator {
+public interface FeeCalculator {
     /**
      * 해당 진료 목적(reason)을 지원하는지 판단
      */

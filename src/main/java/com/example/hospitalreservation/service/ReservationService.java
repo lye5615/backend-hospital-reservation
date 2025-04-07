@@ -1,7 +1,7 @@
 package com.example.hospitalreservation.service;
 
 import com.example.hospitalreservation.exception.ReservationException;
-import com.example.hospitalreservation.fee.FeeCaculator;
+import com.example.hospitalreservation.fee.FeeCalculator;
 import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.repository.ReservationRepository;
 import org.slf4j.Logger;
@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +21,9 @@ public class ReservationService {
     //주입 받은 객체
     private final ReservationRepository reservationRepository;
 
-    private final List<FeeCaculator> feeCalculators;
+    private final List<FeeCalculator> feeCalculators;
 
-    public ReservationService(ReservationRepository reservationRepository, List<FeeCaculator> feeCalculators) {
+    public ReservationService(ReservationRepository reservationRepository, List<FeeCalculator> feeCalculators) {
         this.reservationRepository = reservationRepository;
         this.feeCalculators = feeCalculators;
     }

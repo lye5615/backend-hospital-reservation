@@ -1,17 +1,16 @@
 package com.example.hospitalreservation.fee;
 
-
 import org.springframework.stereotype.Component;
 
 @Component
-public class ColdSymptomFeeCalculator implements FeeCaculator{
+public class ColdSymptomFeeCalculator implements FeeCalculator {
     @Override
     public boolean supports(String reason){
         return reason.equals("감기 증상");
     }
 
     @Override
-    public int calculatedFee(){
+    public int calculateFee(){
         return 15000;
     }
 }

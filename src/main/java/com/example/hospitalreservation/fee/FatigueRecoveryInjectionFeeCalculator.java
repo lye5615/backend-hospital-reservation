@@ -1,6 +1,6 @@
 package com.example.hospitalreservation.fee;
 
-public class FatigueRecoveryInjectionFeeCalculator {
+public class FatigueRecoveryInjectionFeeCalculator implements FeeCalculator {
     @Override
     public boolean supports(String reason) {
         return "피로 회복 주사".equals(reason);
