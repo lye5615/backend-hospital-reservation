@@ -3,6 +3,9 @@ package com.example.hospitalreservation.service;
 import com.example.hospitalreservation.exception.ReservationException;
 import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.repository.ReservationRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,8 +14,10 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class ReservationService {
+    private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
 
     //주입 받은 객체
     private final ReservationRepository reservationRepository;
@@ -50,6 +55,7 @@ public class ReservationService {
         }
 
         System.out.println("예약 ID: "+id+"취소 (사유: "+cancelReason+")");
+        logger.info("예약 ID {} 취소됨. 취소 사유: {}", id, cancelReason);
 
         reservationRepository.deleteById(id);
     }
