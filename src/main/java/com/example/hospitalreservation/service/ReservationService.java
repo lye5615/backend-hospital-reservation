@@ -1,6 +1,7 @@
 package com.example.hospitalreservation.service;
 
 import com.example.hospitalreservation.exception.ReservationException;
+import com.example.hospitalreservation.fee.FeeCaculator;
 import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.repository.ReservationRepository;
 import org.slf4j.Logger;
@@ -8,9 +9,8 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +22,11 @@ public class ReservationService {
     //주입 받은 객체
     private final ReservationRepository reservationRepository;
 
-    public ReservationService(ReservationRepository reservationRepository) {
+    private final List<FeeCaculator> feeCalculators;
+
+    public ReservationService(ReservationRepository reservationRepository, List<FeeCaculator> feeCalculators) {
         this.reservationRepository = reservationRepository;
+        this.feeCalculators = feeCalculators;
     }
 
     //모든 예약 리스트를 조회
@@ -43,8 +46,13 @@ public class ReservationService {
             throw new ReservationException("해당 시간에는 이미 예약이 있습니다. 다른 시간을 선택해주세요.");
         }
 
+        int calculatedFee = feeCalculators.stream()
+                .filter(caculator -> caculator.supports(reason))
+                .findFirst()
+                .orElseThrow(() -> new ReservationException("지원되지 않는 진료 목적입니다."))
+                .calculateFee();
 
-        Reservation reservation = Reservation.of(doctorId, patientId, desiredTime, reason);
+        Reservation reservation = Reservation.of(doctorId, patientId, desiredTime, reason, calculatedFee);
         return reservationRepository.save(reservation).getId();
     }
 

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 @Controller
-@RestController//반환 명세를 JSON? 방식으로??
 @RequestMapping("/reservations")
 
 public class ReservationController {
@@ -19,7 +18,6 @@ public class ReservationController {
     public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
-    //단순히 멤버변수를 두면 된다 Spring이 의존성을 알아서 해준다??
 
     @GetMapping
     public String getReservations(Model model) {
