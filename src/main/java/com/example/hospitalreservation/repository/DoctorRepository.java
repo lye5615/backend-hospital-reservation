@@ -1,17 +1,11 @@
 package com.example.hospitalreservation.repository;
 
 import com.example.hospitalreservation.model.Doctor;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-@Repository
-public class DoctorRepository {
-    private final Doctor doctor = new Doctor(1L, "Dr. Rian", "FM");
-
-    public Doctor getDoctor(){
-        return doctor;
-    }
+public interface DoctorRepository extends JpaRepository<Doctor, Long> {
+    Optional<Doctor> findByName(String name);
 }
+

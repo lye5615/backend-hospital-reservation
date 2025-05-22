@@ -26,7 +26,6 @@ public class ReservationController {
         return "reservations/list";
     }
 
-    // TODO_w2 : 필요한 어노테이션을 작성해주세요.
     @GetMapping("/new")
     public String showReservationForm() {
         // TODO_w2 : 예약하기 페이지를 가져오는 코드를 작성해주세요.

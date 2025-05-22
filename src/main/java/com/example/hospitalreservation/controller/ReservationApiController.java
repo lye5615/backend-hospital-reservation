@@ -22,7 +22,7 @@ public class ReservationApiController {
     }
 
     @PostMapping
-    public Reservation createReservation(@RequestBody ReservationRequest request) {
+    public ReservationResponse createReservation(@RequestBody ReservationRequest request) {
         Long reservationId = reservationService.createReservation(request.doctorId(), request.patientId(), request.reservationTime(), request.reason());
         // 생성된 예약 객체를 조회하여 반환하거나, 필요에 따라 응답 메시지를 구성
         int calculatedFee = reservationService.calculatedFee(request.reason());
